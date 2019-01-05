@@ -28,29 +28,25 @@ Estimate the optimal embedding dimension for `v`.
 - **`atol`**: Tolerance `rtol` in Kennel's algorithms. See [`DelayEmbeddings.fnn`](https://github.com/JuliaDynamics/DelayEmbeddings.jl/blob/master/src/estimate_dimension.jl)
     source code for more details.
 """
-function optimal_dimension(v, τ; dims = 1:8; method = "fnn"; kwargs...)
+function optimal_dimension(v, τ; dims = 1:8, method = "fnn", kwargs...)
     # The embedding dimension should be the dimension returned by
     # estimate_dimension plus one (see DelayEmbeddings.jl source code).
     if method == "fnn"
-        γs = estimate_dimension(v, τ, dims[1:(end - 1)], method = "fnn";
-            kwargs...)
+        γs = estimate_dimension(v, τ, dims[1:(end - 1)], method = "fnn"; kwargs...)
         # Kennel's false nearest neighbor method should drop to zero near the
         # optimal value of γ, so find the minimal value of γ for the dims
         # we've probed.
         dim = findmin(γs)[2] + 1
         return dim
     elseif method == "afnn"
-        γs = estimate_dimension(v, τ, dims[1:(end - 1)], method = "afnn";
-            kwargs...)
+        γs = estimate_dimension(v, τ, dims[1:(end - 1)], method = "afnn"; kwargs...)
         # Cao's averaged false nearest neighbors method saturates around 1.0
-        # near the optimal value of γ, so find the γ closest to 1.0.
-        for the
+        # near the optimal value of γ, so find the γ closest to 1.0 for the
         # dims we've probed.
         dim = findmin(1.0 .- γs)[2] + 1
         return dim
     elseif method == "f1nn"
-        γs = estimate_dimension(v, τ, dims[1:(end - 1)], method = "f1nn";
-            kwargs...)
+        γs = estimate_dimension(v, τ, dims[1:(end - 1)], method = "f1nn"; kwargs...)
         # Krakovská's false first nearest neighbors method drops to zero near
         # the optimal value of γ, so find the minimal value of γ for the dims
         # we've probed.
@@ -73,7 +69,7 @@ the optimal lag, then using that lag to estimate the dimension.
 - **`v`**: The data series for which to estimate the embedding dimension.
 - **`dims`**: The dimensions to try
 """
-function optimal_dimension(v; dims = 1:8;
+function optimal_dimension(v; dims = 1:8,
         method_fnn = "fnn", method_delay = "first_min")
     estimate_dimension(v, optimal_delay(v, method = method_delay))
 end
