@@ -1,11 +1,37 @@
 
+export 
+BinningScheme,
+TriangulationBinningScheme,
+TriangulationBinning,
+RefinedTriangulationBinningMaxRadius,
+RefinedTriangulationBinningSplitFactor,
+RefinedTriangulationBinningSplitQuantile,
+RectangularBinning
+
 """ 
     BinningScheme
 
 The supertype of all binning schemes in the CausalityTools ecosystem. 
-
 """
 abstract type BinningScheme end
+
+""" 
+    TriangulationBinningScheme
+
+The supertype of all triangulation binning schemes in the CausalityTools ecosystem.
+""" 
+abstract type TriangulationBinningScheme end
+
+""" 
+    RectangularBinningScheme
+
+The supertype of all rectangular binning schemes in the CausalityTools ecosystem.
+""" 
+abstract type RectangularBinningScheme end
+
+
+
+
 
 
 """
@@ -13,7 +39,7 @@ abstract type BinningScheme end
     
 A binning scheme for a triangulated simplex partition.
 """
-struct TriangulationBinning <: BinningScheme end
+struct TriangulationBinning <: TriangulationBinningScheme end
 
 """
     RefinedTriangulationBinningMaxRadius
@@ -29,7 +55,7 @@ the resulting radius bound.
 - **`max_radius_frac::Float64`**: The maximum radius expressed as a fraction of the 
 radius of the largest simplex of the initial triangulation.
 """
-struct RefinedTriangulationBinningMaxRadius <: BinningScheme
+struct RefinedTriangulationBinningMaxRadius <: TriangulationBinningScheme
     max_radius_frac::Float64
 end
 
@@ -45,7 +71,7 @@ is to be split.
 ## Fields 
 - **`simplex_split_factor::Int`**: The number of times each simplex is split.
 """
-struct RefinedTriangulationBinningSplitFactor <: BinningScheme
+struct RefinedTriangulationBinningSplitFactor <: TriangulationBinningScheme
     simplex_split_factor::Int
 end
 
@@ -64,10 +90,11 @@ is to be split.
     are split with a splitting factor of `simplex_split_factor`.
 - **`simplex_split_factor::Int`**: The number of times each simplex is split.
 """
-struct RefinedTriangulationBinningSplitQuantile <: BinningScheme
+struct RefinedTriangulationBinningSplitQuantile <: TriangulationBinningScheme
     split_quantile::Float64
     simplex_split_factor::Int
 end
+
 
 """
     RectangularBinningScheme
@@ -78,21 +105,17 @@ Instructions for creating a rectangular box partition.
 
 - **`ϵ::Union{Int, Float64, Vector{Int}, Vector{Float64}}`**: The instructions for deciding 
     the edge lengths of the rectangular boxes. The following `ϵ` are valid:
+
         1. `ϵ::Int` divides each axis into `ϵ` intervals of the same size.
+
         2. `ϵ::Float` divides each axis into intervals of size `ϵ`.
+
         3. `ϵ::Vector{Int}` divides the i-th axis into `ϵᵢ` intervals of the same size.
+        
         4. `ϵ::Vector{Float64}` divides the i-th axis into intervals of size `ϵᵢ`.
 """
-struct RectangularBinning <: BinningScheme
-    ϵ::Union{Int, Float64, Vector{Int}, Vector{Float64}}
+struct RectangularBinning <: RectangularBinningScheme
+    ϵ::Union{Int, Float64, Vector{Int}, Vector{Float64}, Tuple{Vector{Tuple{Float64,Float64}},Int64}}
 end
 
 
-
-export 
-BinningScheme,
-TriangulationBinning,
-RefinedTriangulationBinningMaxRadius,
-RefinedTriangulationBinningSplitFactor,
-RefinedTriangulationBinningSplitQuantile,
-RectangularBinning
