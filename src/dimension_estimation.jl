@@ -2,10 +2,10 @@ import DelayEmbeddings.estimate_delay
 import DelayEmbeddings.estimate_dimension
 
 """
-    optimal_delay(v; method = "first_min")
+    optimal_delay(v; method = "mi_min")
 """
-function optimal_delay(v; method = "first_min")
-    τ = estimate_delay(v, method)
+function optimal_delay(v; method = "mi_min", τs = 1:1:min(ceil(Int, length(v)/10), 100))
+    τ = estimate_delay(v, method, τs)
 end
 
 """
@@ -73,3 +73,5 @@ function optimal_dimension(v; dims = 1:8,
         method_fnn = "fnn", method_delay = "first_min")
     estimate_dimension(v, optimal_delay(v, method = method_delay))
 end
+
+export optimal_delay, optimal_dimension
