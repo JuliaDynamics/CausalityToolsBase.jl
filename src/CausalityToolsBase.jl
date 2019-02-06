@@ -1,6 +1,7 @@
 module CausalityToolsBase
 	include("discretization.jl")
 	include("dimension_estimation.jl")
+	include("simplex_intersections.jl")
 end # module
 
 """
