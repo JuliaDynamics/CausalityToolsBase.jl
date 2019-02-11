@@ -3,6 +3,10 @@ import DelayEmbeddings.estimate_dimension
 
 """
     optimal_delay(v; method = "mi_min")
+
+Estimate the optimal embedding delay for `v` using the provided `method`. 
+See the documentation for `DelayEmbeddings.estimate_delay` for a list of 
+available methods.
 """
 function optimal_delay(v; method = "mi_min", τs = 1:1:min(ceil(Int, length(v)/10), 100))
     τ = estimate_delay(v, method, τs)

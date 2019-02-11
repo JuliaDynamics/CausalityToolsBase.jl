@@ -31,9 +31,6 @@ abstract type RectangularBinningScheme end
 
 
 
-
-
-
 """
     TriangulationBinningScheme
     
