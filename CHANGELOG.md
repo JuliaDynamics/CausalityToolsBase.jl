@@ -1,3 +1,7 @@
+# Release v0.3.1
+
+## New functionality 
+- Added `encode` method for `SVector` and `MVector`. 
 
 # Release v0.3.0
 
