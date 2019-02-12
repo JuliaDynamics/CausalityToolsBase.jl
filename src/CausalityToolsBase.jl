@@ -4,7 +4,7 @@ module CausalityToolsBase
 	import DelayEmbeddings: AbstractDataset, Dataset
 
 	include("discretization/discretization.jl")
-
+	include("reconstruction/custom_reconstruction.jl")
 	include("dimension_estimation.jl")
 	include("simplex_intersections.jl")
 
