@@ -15,6 +15,14 @@ function encode(point::Vector{T}, reference_point, edgelengths) where {T <: Real
     floor.(Int, (point .- reference_point) ./ edgelengths)
 end
 
+function encode(point::SVector{dim, T}, reference_point, edgelengths) where {dim, T <: Real}
+    floor.(Int, (point .- reference_point) ./ edgelengths)
+end
+
+function encode(point::MVector{dim, T}, reference_point, edgelengths) where {dim, T <: Real}
+    floor.(Int, (point .- reference_point) ./ edgelengths)
+end
+
 function encode(points::Vector{T}, reference_point, edgelengths) where {T <: Union{Vector, SVector, MVector}}
     [encode(points[i], reference_point, edgelengths) for i = 1:length(points)]
 end
