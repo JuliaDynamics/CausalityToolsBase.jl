@@ -5,6 +5,12 @@ D = Dataset(pts);
 
 ϵs = [5, 0.5, [0.3 for i = 1:5], [10 for i = 1:5]]
 
+refpoint = [0, 0, 0]
+steps = [0.2, 0.2, 0.3]
+@test encode(rand(3), refpoint, steps) isa Vector{Int}
+@test encode(SVector{3, Float64}(rand(3)), refpoint, steps) isa Vector{Int}
+@test encode(MVector{3, Float64}(rand(3)), refpoint, steps) isa Vector{Int}
+
 # Infer that we want a rectangular binning.
 for ϵ in ϵs
     @test get_minima(pts, ϵ) isa Vector{Float64}
