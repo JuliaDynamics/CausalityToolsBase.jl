@@ -1,3 +1,12 @@
+# Release v0.3.2
+
+## New functionality 
+- Support specifying axis minima/maxima for rectangular grid.
+
+## Improvements
+- Inputs to `customembed` are now validated.
+
+
 # Release v0.3.1
 
 ## New functionality 
