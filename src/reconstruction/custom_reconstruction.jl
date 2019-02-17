@@ -97,27 +97,37 @@ struct CustomReconstruction{dim, T}
     end
 end
 
+
+function verify_valid_positions!(positions::Positions, dim::Int)
+    if any(positions .> dim)
+        outside_pos = positions[findall(positions .> dim)]
+        ndims = length(positions)
+        throw(ArgumentError("Position(s) $outside_pos refer to variables not present in the dataset, which has only $ndims variables"))
+    end
+end
+
 function CustomReconstruction(pts::Vector{VT}, positions::Positions, lags::Lags) where {VT}
     dim = length(pts[1])
     T = eltype(pts[1])
-    if any(positions .> dim)
-        outside_pos = positions[findall(positions .> dim)]
-        ndims = length(pts[1])
-        throw(ArgumentError("Position(s) $outside_pos refer to variables not present in the dataset, which has only $ndims variables"))
-    end
+
+    verify_valid_positions!(positions, dim)
     
     customembed(pts, positions, lags)        
 end
     
 function CustomReconstruction(pts::AbstractArray{T, 2}, positions::Positions, lags::Lags) where {T}
+    dim = minimum(size(pts))
+    verify_valid_positions!(positions, dim)
+
     if size(pts, 1) > size(pts, 2)
-        D = customembed(pts, positions, lags)
+        return customembed(pts, positions, lags)
     else
-        D = customembed(transpose(pts), positions, lags)
+        return customembed(transpose(pts), positions, lags)
     end 
 end
         
 function CustomReconstruction(pts::Dataset{dim, T}, positions::Positions, lags::Lags) where {dim, T}
+    verify_valid_positions!(positions, dim)
     customembed(pts, positions, lags)
 end
 
@@ -186,10 +196,12 @@ a lag of `lags[i]`.
 not the `k`th dynamical variable/column.*
 """
 function customembed(pts, positions::Positions, lags::Lags)
-    positions, lags = positions.positions, lags.lags
-    
+        
     # Dimension of the original space 
     dim = length(pts[1])
+    verify_valid_positions!(positions, dim)
+
+    positions, lags = positions.positions, lags.lags
     
     # Dimension of the embedding space
     @assert length(positions) == length(lags)
@@ -231,3 +243,11 @@ not the `k`th dynamical variable/column.*
 function customembed(pts)
     CustomReconstruction(pts)
 end
+
+
+# Add encode method for CustomReconstruction instances.
+function encode(points::CustomReconstruction{dim, T}, reference_point, edgelengths) where {dim, T}
+    [encode(points[i], reference_point, edgelengths) for i = 1:length(points)]
+end
+
+export encode
