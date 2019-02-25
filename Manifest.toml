@@ -21,17 +21,11 @@ git-tree-sha1 = "055eb2690182ebc31087859c3dd8598371d3ef9e"
 uuid = "b99e7846-7c00-51b0-8f62-c81ae34c0232"
 version = "0.5.3"
 
-[[Calculus]]
-deps = ["Compat"]
-git-tree-sha1 = "f60954495a7afcee4136f78d1d60350abd37a409"
-uuid = "49dc2e85-a5d0-5ad3-a950-438e2897f1b9"
-version = "0.4.1"
-
 [[ChaosTools]]
-deps = ["Combinatorics", "DiffEqBase", "Distances", "DynamicalSystemsBase", "ForwardDiff", "LinearAlgebra", "NearestNeighbors", "OrdinaryDiffEq", "Random", "Reexport", "Roots", "StaticArrays", "Statistics", "StatsBase", "Test"]
-git-tree-sha1 = "646520c52f4831303cac058d933b8bc5b163b32d"
+deps = ["Combinatorics", "DiffEqBase", "Distances", "DynamicalSystemsBase", "ForwardDiff", "LinearAlgebra", "NearestNeighbors", "Random", "Reexport", "Roots", "StaticArrays", "Statistics", "StatsBase", "Test"]
+git-tree-sha1 = "df13c89cd7db75f9353525f46f94cb7a1015df7d"
 uuid = "608a59af-f2a3-5ad4-90b4-758bdf3122a7"
-version = "1.4.1"
+version = "1.5.0"
 
 [[Combinatorics]]
 deps = ["LinearAlgebra", "Polynomials", "Test"]
@@ -62,38 +56,20 @@ deps = ["Printf"]
 uuid = "ade2ca70-3891-5945-98fb-dc099432e06a"
 
 [[DelayEmbeddings]]
-deps = ["Distances", "LinearAlgebra", "NearestNeighbors", "StaticArrays", "StatsBase", "Test"]
-git-tree-sha1 = "6d42460dc2c84058850b26da7b5174fb6fcd213e"
+deps = ["Distances", "LinearAlgebra", "NearestNeighbors", "StaticArrays", "Statistics", "StatsBase", "Test"]
+git-tree-sha1 = "e29667f3271b31dba2c7765b833502c696634c5a"
 uuid = "5732040d-69e3-5649-938a-b6b4f237613f"
-version = "0.1.1"
+version = "1.0.2"
 
 [[DelimitedFiles]]
 deps = ["Mmap"]
 uuid = "8bb1440f-4735-579b-a4ab-409b98df4dab"
-
-[[DiffBase]]
-deps = ["StaticArrays"]
-git-tree-sha1 = "38522d70e417cf9ace93848f17eb9fff20d486d2"
-uuid = "c5cfe0b6-c10a-51a5-87e3-fd79235949f0"
-version = "0.3.2"
 
 [[DiffEqBase]]
 deps = ["Compat", "IteratorInterfaceExtensions", "LinearAlgebra", "RecipesBase", "RecursiveArrayTools", "Requires", "Roots", "SparseArrays", "StaticArrays", "Statistics", "SuiteSparse", "TableTraits", "Test", "TreeViews"]
 git-tree-sha1 = "0ec073be8ad4a704bc9c4ba2f649126308ffb849"
 uuid = "2b5f629d-d688-5b77-993f-72d75c75574e"
 version = "5.4.0"
-
-[[DiffEqDiffTools]]
-deps = ["LinearAlgebra", "Test"]
-git-tree-sha1 = "4b21dd83c341412a0607334ac64bb5593a4bd583"
-uuid = "01453d9d-ee7c-5054-8395-0335cb756afa"
-version = "0.8.0"
-
-[[DiffEqOperators]]
-deps = ["DiffEqBase", "LinearAlgebra", "Random", "SparseArrays", "StaticArrays", "Test"]
-git-tree-sha1 = "332eea616ae687e7e4581602947ad5f053c7c650"
-uuid = "9fdde737-9c7f-55bf-ade8-46b3f136cc48"
-version = "3.4.0"
 
 [[DiffResults]]
 deps = ["Compat", "StaticArrays"]
@@ -123,23 +99,11 @@ git-tree-sha1 = "dac4782f695f2910c2b1e96fc59384915fb91ec7"
 uuid = "6e36e845-645a-534a-86f2-f5d4aa5a06b4"
 version = "1.2.3"
 
-[[ExponentialUtilities]]
-deps = ["LinearAlgebra", "Printf", "Random", "SparseArrays", "Test"]
-git-tree-sha1 = "a25edb801ef3299b1c0fbbfe62692a074a82893b"
-uuid = "d4d017d3-3776-5f7e-afef-a10c40355c18"
-version = "1.3.0"
-
 [[ForwardDiff]]
 deps = ["CommonSubexpressions", "DiffResults", "DiffRules", "InteractiveUtils", "LinearAlgebra", "NaNMath", "Random", "SparseArrays", "SpecialFunctions", "StaticArrays", "Test"]
 git-tree-sha1 = "4c4d727f1b7e0092134fabfab6396b8945c1ea5b"
 uuid = "f6369f11-7733-5829-9624-2563aa707210"
 version = "0.10.3"
-
-[[GenericSVD]]
-deps = ["LinearAlgebra", "Random", "Test"]
-git-tree-sha1 = "8aa93c3f3d81562a8962047eafcc5712af0a0f59"
-uuid = "01680d73-4ee2-5a08-a1aa-533608c188bb"
-version = "0.2.1"
 
 [[InteractiveUtils]]
 deps = ["Markdown"]
@@ -157,24 +121,12 @@ uuid = "76f85450-5226-5b5a-8eaa-529ad045b433"
 [[Libdl]]
 uuid = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
 
-[[LineSearches]]
-deps = ["LinearAlgebra", "NLSolversBase", "NaNMath", "Parameters", "Printf", "Test"]
-git-tree-sha1 = "54eb90e8dbe745d617c78dee1d6ae95c7f6f5779"
-uuid = "d3d80556-e9d4-5f37-9878-2ab0fcc64255"
-version = "7.0.1"
-
 [[LinearAlgebra]]
 deps = ["Libdl"]
 uuid = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 
 [[Logging]]
 uuid = "56ddb016-857b-54e1-b83d-db4d58db5568"
-
-[[MacroTools]]
-deps = ["Compat"]
-git-tree-sha1 = "3fd1a3022952128935b449c33552eb65895380c1"
-uuid = "1914dd2f-81c6-5fcd-8719-6d5c9610ff09"
-version = "0.4.5"
 
 [[Markdown]]
 deps = ["Base64"]
@@ -188,24 +140,6 @@ version = "0.4.0"
 
 [[Mmap]]
 uuid = "a63ad114-7e13-5084-954f-fe012c677804"
-
-[[MuladdMacro]]
-deps = ["MacroTools", "Test"]
-git-tree-sha1 = "41e6e7c4b448afeaddaac7f496b414854f83b848"
-uuid = "46d2c3a1-f734-5fdb-9937-b9b9aeba4221"
-version = "0.2.1"
-
-[[NLSolversBase]]
-deps = ["Calculus", "DiffEqDiffTools", "DiffResults", "Distributed", "ForwardDiff", "LinearAlgebra", "Random", "SparseArrays", "Test"]
-git-tree-sha1 = "0c6f0e7f2178f78239cfb75310359eed10f2cacb"
-uuid = "d41bc354-129a-5804-8e4c-c37616107c6c"
-version = "7.3.1"
-
-[[NLsolve]]
-deps = ["DiffBase", "DiffEqDiffTools", "Distances", "ForwardDiff", "LineSearches", "LinearAlgebra", "NLSolversBase", "Printf", "Reexport", "SparseArrays", "Test"]
-git-tree-sha1 = "0e046f4f72801c9782d64db972ce66a85d3473f1"
-uuid = "2774e3e8-f4cf-5e23-947b-6d7e65073b56"
-version = "3.0.1"
 
 [[NaNMath]]
 deps = ["Compat"]
@@ -224,18 +158,6 @@ deps = ["Random", "Serialization", "Test"]
 git-tree-sha1 = "85619a3f3e17bb4761fe1b1fd47f0e979f964d5b"
 uuid = "bac558e1-5e72-5ebc-8fee-abe8a469f55d"
 version = "1.0.2"
-
-[[OrdinaryDiffEq]]
-deps = ["DataStructures", "DiffEqBase", "DiffEqDiffTools", "DiffEqOperators", "ExponentialUtilities", "ForwardDiff", "GenericSVD", "InteractiveUtils", "LinearAlgebra", "Logging", "MuladdMacro", "NLsolve", "Parameters", "Printf", "Random", "RecursiveArrayTools", "Reexport", "SparseArrays", "StaticArrays", "Statistics", "Test"]
-git-tree-sha1 = "4bcf8ce928dd6c905ed4bcd64b15687781543a87"
-uuid = "1dea7af3-3e70-54e6-95c3-0bf5283fa5ed"
-version = "5.2.1"
-
-[[Parameters]]
-deps = ["Markdown", "OrderedCollections", "REPL", "Test"]
-git-tree-sha1 = "70bdbfb2bceabb15345c0b54be4544813b3444e4"
-uuid = "d96e819e-fc66-5662-9728-84c9c7592b0a"
-version = "0.10.3"
 
 [[Pkg]]
 deps = ["Dates", "LibGit2", "Markdown", "Printf", "REPL", "Random", "SHA", "UUIDs"]
