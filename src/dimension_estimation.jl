@@ -4,11 +4,15 @@ import DelayEmbeddings.estimate_dimension
 """
     optimal_delay(v; method = "mi_min")
 
-Estimate the optimal embedding delay for `v` using the provided `method`. 
-See the documentation for `DelayEmbeddings.estimate_delay` for a list of 
-available methods.
+Estimate the optimal embedding lag for `v`. 
+
+## Keyword arguments
+- **`method`**: Either "fnn" (Kennel's false nearest neighbors method). 
+    Default is `mi_min`.
+- **`τs`**: The lags over which to estimate the embedding lag. Defaults to 10% of the 
+    length of the time series.
 """
-function optimal_delay(v; method = "mi_min", τs = 1:1:min(ceil(Int, length(v)/10), 100))
+function optimal_delay(v; method = "mi_min", τs = 1:1:min(ceil(Int, length(v)/15), 100))
     τ = estimate_delay(v, method, τs)
 end
 
@@ -32,11 +36,11 @@ Estimate the optimal embedding dimension for `v`.
 - **`atol`**: Tolerance `rtol` in Kennel's algorithms. See [`DelayEmbeddings.fnn`](https://github.com/JuliaDynamics/DelayEmbeddings.jl/blob/master/src/estimate_dimension.jl)
     source code for more details.
 """
-function optimal_dimension(v, τ; dims = 1:8, method = "fnn", kwargs...)
+function optimal_dimension(v, τ, method = "f1nn"; dims = 1:8, kwargs...)
     # The embedding dimension should be the dimension returned by
     # estimate_dimension plus one (see DelayEmbeddings.jl source code).
     if method == "fnn"
-        γs = estimate_dimension(v, τ, dims[1:(end - 1)], method = "fnn"; kwargs...)
+        γs = estimate_dimension(v, τ, method = "f1nn", dims[1:(end - 1)]; kwargs...)
         # Kennel's false nearest neighbor method should drop to zero near the
         # optimal value of γ, so find the minimal value of γ for the dims
         # we've probed.
@@ -73,9 +77,13 @@ the optimal lag, then using that lag to estimate the dimension.
 - **`v`**: The data series for which to estimate the embedding dimension.
 - **`dims`**: The dimensions to try
 """
-function optimal_dimension(v; dims = 1:8,
-        method_fnn = "fnn", method_delay = "first_min")
-    estimate_dimension(v, optimal_delay(v, method = method_delay))
+function optimal_dimension(v; method = "f1nn",      
+        dims = 2:8, 
+        method_delay = "mi_min", 
+        τs = 1:1:min(ceil(Int, length(v)/10), min(ceil(Int, length(v)/2), 100))
+    )
+    τ = optimal_delay(v, method = method_delay, τs = τs)
+    optimal_dimension(v, τ, method)
 end
 
 export optimal_delay, optimal_dimension
