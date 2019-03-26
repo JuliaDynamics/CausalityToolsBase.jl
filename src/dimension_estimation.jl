@@ -17,7 +17,7 @@ function optimal_delay(v; method = "mi_min", τs = 1:1:min(ceil(Int, length(v)/1
 end
 
 """
-    optimal_dimension(v, τ; dims = 1:8; method = "fnn"; kwargs...)
+    optimal_dimension(v, τ; dims = 2:8; method = "fnn"; kwargs...)
 
 Estimate the optimal embedding dimension for `v`.
 
@@ -36,7 +36,7 @@ Estimate the optimal embedding dimension for `v`.
 - **`atol`**: Tolerance `rtol` in Kennel's algorithms. See [`DelayEmbeddings.fnn`](https://github.com/JuliaDynamics/DelayEmbeddings.jl/blob/master/src/estimate_dimension.jl)
     source code for more details.
 """
-function optimal_dimension(v, τ, method = "f1nn"; dims = 1:8, kwargs...)
+function optimal_dimension(v, τ, method = "f1nn"; dims = 2:8, kwargs...)
     # The embedding dimension should be the dimension returned by
     # estimate_dimension plus one (see DelayEmbeddings.jl source code).
     if method == "fnn"
@@ -67,7 +67,7 @@ end
 
 
 """
-    optimal_dimension(v; dims = 1:8,
+    optimal_dimension(v; dims = 2:8,
         method_dimension = "fnn", method_delay = "first_min")
 
 Estimate the optimal embedding dimension for `v` by first estimating

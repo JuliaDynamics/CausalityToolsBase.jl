@@ -18,6 +18,7 @@ D = Dataset(pts)
 @test get_maxima(spts) isa SVector{3, Float64}
 @test get_maxima(mpts) isa SVector{3, Float64}
 
+
 pts = [rand(5) for i = 1:1000];
 spts = [SVector{5, Float64}(pt) for pt in pts]
 mpts = [MVector{5, Float64}(pt) for pt in pts]
@@ -35,6 +36,14 @@ steps = [0.2, 0.2, 0.3]
 @test encode([rand(3) for i = 1:20], [0, 0, 0], [0.1, 0.1, 0.1]) isa Vector{Vector{Int}}
 @test encode([SVector{3, Float64}(rand(3)) for i = 1:20], [0, 0, 0], [0.1, 0.1, 0.1]) isa Vector{Vector{Int}}
 @test encode([MVector{3, Float64}(rand(3)) for i = 1:20], [0, 0, 0], [0.1, 0.1, 0.1]) isa Vector{Vector{Int}}
+
+pts = [rand(5) for i = 1:1000];
+spts = [SVector{5, Float64}(pt) for pt in pts]
+mpts = [MVector{5, Float64}(pt) for pt in pts]
+D = Dataset(pts);
+
+ϵs = [5, 0.5, [0.3 for i = 1:5], [10 for i = 1:5], (get_minmaxes(pts), 10)]
+
 
 # Infer that we want a rectangular binning.
 for ϵ in ϵs
