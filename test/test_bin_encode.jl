@@ -8,15 +8,15 @@ D = Dataset(pts)
 @test get_minmaxes(mpts) isa Vector{Tuple{Float64, Float64}}
 @test get_minmaxes(D) isa Vector{Tuple{Float64, Float64}}
 
-@test get_minima(pts) isa Vector{Float64}
-@test get_minima(D) isa Vector{Float64}
-@test get_minima(spts) isa Vector{Float64}
-@test get_minima(mpts) isa Vector{Float64}
+@test get_minima(pts) isa SVector{3, Float64}
+@test get_minima(D) isa SVector{3, Float64}
+@test get_minima(spts) isa SVector{3, Float64}
+@test get_minima(mpts) isa SVector{3, Float64}
 
-@test get_maxima(pts) isa Vector{Float64}
-@test get_maxima(D) isa Vector{Float64}
-@test get_maxima(spts) isa Vector{Float64}
-@test get_maxima(mpts) isa Vector{Float64}
+@test get_maxima(pts) isa SVector{3, Float64}
+@test get_maxima(D) isa SVector{3, Float64}
+@test get_maxima(spts) isa SVector{3, Float64}
+@test get_maxima(mpts) isa SVector{3, Float64}
 
 pts = [rand(5) for i = 1:1000];
 spts = [SVector{5, Float64}(pt) for pt in pts]
