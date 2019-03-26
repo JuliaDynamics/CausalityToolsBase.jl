@@ -5,7 +5,6 @@ export
 get_minima_and_edgelengths, 
 get_edgelengths, 
 get_minima,
-get_maxima,
 get_minmaxes
 
 
@@ -21,7 +20,7 @@ function get_minima end
 
 Return the maxima along each axis of the dataset `pts`.
 """
-function get_maxima end
+function get_minima end
 
 function get_minima(pts::Dataset)
     minima(pts)

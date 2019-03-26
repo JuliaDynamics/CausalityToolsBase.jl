@@ -13,18 +13,18 @@ D = Dataset(pts);
 @test marginal_visits(joint_visits(spts, 0.2), 1:4) isa Vector{Vector{Int}}
 
 # Histograms directly from points
-@test non0hist(spts, RectangularBinning(0.2), 1:3) |> sum ≈ 1.0
-@test non0hist(spts, RectangularBinning(0.2), [1, 2]) |> sum ≈ 1.0
-@test non0hist(spts, 0.5, 1:5) |> sum ≈ 1.0
-@test non0hist(mpts, RectangularBinning(0.2), 1:3) |> sum ≈ 1.0
-@test non0hist(mpts, RectangularBinning(0.2), [1, 2]) |> sum ≈ 1.0
-@test non0hist(mpts, 0.5, 1:5) |> sum ≈ 1.0
-@test non0hist(pts, RectangularBinning(0.2), 1:3) |> sum≈ 1.0
-@test non0hist(pts, RectangularBinning(0.2), [1, 2]) |> sum≈ 1.0
-@test non0hist(pts, 0.5, 1:5) |> sum ≈ 1.0
-@test non0hist(D, RectangularBinning(0.2), 1:3) |> sum≈ 1.0
-@test non0hist(D, RectangularBinning(0.2), [1, 2]) |> sum ≈ 1.0
-@test non0hist(D, 0.5, 1:5) |> sum ≈ 1.0
+@test non0hist(spts, RectangularBinning(0.2), 1:3) ≈ 1.0
+@test non0hist(spts, RectangularBinning(0.2), [1, 2]) ≈ 1.0
+@test non0hist(spts, 0.5, 1:5) ≈ 1.0
+@test non0hist(mpts, RectangularBinning(0.2), 1:3) ≈ 1.0
+@test non0hist(mpts, RectangularBinning(0.2), [1, 2]) ≈ 1.0
+@test non0hist(mpts, 0.5, 1:5) ≈ 1.0
+@test non0hist(pts, RectangularBinning(0.2), 1:3) ≈ 1.0
+@test non0hist(pts, RectangularBinning(0.2), [1, 2]) ≈ 1.0
+@test non0hist(pts, 0.5, 1:5) ≈ 1.0
+@test non0hist(D, RectangularBinning(0.2), 1:3) ≈ 1.0
+@test non0hist(D, RectangularBinning(0.2), [1, 2]) ≈ 1.0
+@test non0hist(D, 0.5, 1:5) ≈ 1.0
 
 # Histograms from precomputed joint/marginal visitations 
 @test non0hist(joint_visits(spts, 0.2)) |> sum ≈ 1.0

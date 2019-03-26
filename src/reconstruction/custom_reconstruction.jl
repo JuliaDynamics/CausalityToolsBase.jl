@@ -117,12 +117,12 @@ end
     
 function CustomReconstruction(pts::AbstractArray{T, 2}, positions::Positions, lags::Lags) where {T}
     dim = minimum(size(pts))
-
     verify_valid_positions!(positions, dim)
+
     if size(pts, 1) > size(pts, 2)
-        return customembed(Dataset(pts), positions, lags)
+        return customembed(pts, positions, lags)
     else
-        return customembed(Dataset(transpose(pts)), positions, lags)
+        return customembed(transpose(pts), positions, lags)
     end 
 end
         
@@ -144,7 +144,7 @@ Base.firstindex(r::CustomReconstruction) = firstindex(r.reconstructed_pts)
 Base.lastindex(r::CustomReconstruction) = lastindex(r.reconstructed_pts)
 Base.iterate(r::CustomReconstruction) = iterate(r.reconstructed_pts)
 Base.iterate(r::CustomReconstruction, state) = iterate(r.reconstructed_pts, state)
-Base.eltype(r::CustomReconstruction) = eltype(r.reconstructed_pts)
+Base.eltype(r::CustomReconstruction) = eltype(r.reconstructed_pts, state)
 Base.IndexStyle(r::CustomReconstruction) = IndexStyle(r.reconstructed_pts)
 
 
