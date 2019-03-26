@@ -1,3 +1,10 @@
+# Release v0.3.3
+
+## New functionality 
+- Kernel density estimation (KDE) (`kerneldensity`).
+- Mutual information estimation using KDE.
+
+
 # Release v0.3.2
 
 ## New functionality 
