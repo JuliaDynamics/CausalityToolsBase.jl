@@ -1,3 +1,4 @@
+
 export 
 Lags,
 Positions,
@@ -15,6 +16,7 @@ Used in combination with `Positions` to specify how a `CustomReconstruction`
 should be constructed.
 
 ## Examples
+
 - `Lags(2, 0, -3, 1)` indicates a 4-dimensional state space reconstruction where 
     the first variable has a positive lag of 2, 
     the second variable is not lagged, 
@@ -47,6 +49,7 @@ of the positions must refer to a dynamical variable (column) actually present in
 dataset.
 
 ## Examples
+
 - `Positions(1, 2, 1, 5)` indicates a 4-dimensional state space reconstruction where 
     1. the 1st coordinate axis of the reconstruction should be formed from the 
     first variable/column of the input data.
@@ -119,6 +122,7 @@ function CustomReconstruction(pts::AbstractArray{T, 2}, positions::Positions, la
     dim = minimum(size(pts))
 
     verify_valid_positions!(positions, dim)
+
     if size(pts, 1) > size(pts, 2)
         return customembed(Dataset(pts), positions, lags)
     else
@@ -186,7 +190,7 @@ function customembed end
 
 """
     customembed(pts, positions::Positions, lags::Lags)
-
+    
 Creates a custom embedding from a set of points (`pts`), 
 where the i-th embedding column/variable is constructed by
 lagging the `positions[i]`-th variable/column of `pts` by 

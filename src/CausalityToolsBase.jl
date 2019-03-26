@@ -7,6 +7,9 @@ module CausalityToolsBase
 	include("reconstruction/custom_reconstruction.jl")
 	include("dimension_estimation.jl")
 	include("simplex_intersections.jl")
+	
+	include("kerneldensity/kerneldensity.jl")
+	include("mutual_information/mutualinformation.jl") # must be loaded after kerneldensity
 
 end # module
 
