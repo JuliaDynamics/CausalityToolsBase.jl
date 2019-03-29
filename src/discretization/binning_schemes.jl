@@ -119,7 +119,7 @@ The following `ϵ` are valid:
     
 It's probably easier to use the following constructors
 
-- `RectangularBinning(minmaxes::Vector{Tuple{Vararg{T, N}}}, n_intervals::Int)` takes a 
+- `RectangularBinning(RectangularBinning(minmaxes::Vararg{<:AbstractRange{T}, N}; n_intervals::Int = 10))` takes a 
     vector of tuples indiciating the (min, max) along each axis and `n_intervals` that 
     indicates how many equal-length intervals those ranges should be split into. 
     
@@ -141,8 +141,7 @@ function RectangularBinning(minmaxes::Vector{<:AbstractRange{T}}, n_intervals::I
 end
 
 
-function RectangularBinning(n_intervals::Int, 
-        minmaxes::Vararg{<:AbstractRange{T}, N}) where {T, N}
+function RectangularBinning(minmaxes::Vararg{<:AbstractRange{T}, N}; n_intervals::Int = 10) where {T, N}
     v = [(minimum(x), maximum(x)) for x in minmaxes]
     RectangularBinning(v, n_intervals)
 end
