@@ -1,3 +1,17 @@
+# Release v0.3.5
+
+- Improved documentation for `RectangularBinning`.
+
+- Added a few more constructors for `RectangularBinning`.
+
+    1. `RectangularBinning   (minmaxes::Vector{Tuple{Vararg{T, N}}}, n_intervals::Int` takes a vector of tuples indiciating the (min, max) along each axis and `n_intervals` that indicates how many intervals those ranges should be split into. 
+    
+    2. `RectangularBinning(minmaxes::Vector{<:AbstractRange{T}}, n_intervals::Int)` or `RectangularBinning(minmaxes::Vararg{<:AbstractRange{T}, N}; n_intervals::Int = 10)` does the same, but the arguments are provided as ranges and the number of intervals must be specified by keyword.
+
+- Added `generate_gridpoints` function to explicitly generate the grid points used in methods relying on discretizations. Only valid for rectangular grids for now. The grid type is indicated by an instance of a `Interpolation.GridType`, which is either `OnCell()` or `OnGrid()`.
+
+- Added extra `OnPoints<:GridType` type indicating that a set of points should be considered as the grid.
+
 # Release v0.3.3
 
 ## New functionality 
