@@ -92,27 +92,57 @@ struct RefinedTriangulationBinningSplitQuantile <: TriangulationBinningScheme
     simplex_split_factor::Int
 end
 
-
 """
-    RectangularBinningScheme
+    RectangularBinning(ϵ)
     
-Instructions for creating a rectangular box partition.
+Instructions for creating a rectangular box partition using the binning scheme `ϵ`. 
+The following `ϵ` are valid:
 
-## Fields 
+## Data ranges along each axis dictated by data ranges 
 
-- **`ϵ::Union{Int, Float64, Vector{Int}, Vector{Float64}}`**: The instructions for deciding 
-    the edge lengths of the rectangular boxes. The following `ϵ` are valid:
+1. `RectangularBinning(ϵ::Int)` divides each axis into `ϵ` equal-length intervals.
 
-        1. `ϵ::Int` divides each axis into `ϵ` intervals of the same size.
+2. `RectangularBinning(ϵ::Float64)` divides each axis into intervals of fixed size `ϵ`.
 
-        2. `ϵ::Float` divides each axis into intervals of size `ϵ`.
+3. `RectangularBinning(ϵ::Vector{Int})` divides the i-th axis into `ϵᵢ` equal-length 
+    intervals.
 
-        3. `ϵ::Vector{Int}` divides the i-th axis into `ϵᵢ` intervals of the same size.
-        
-        4. `ϵ::Vector{Float64}` divides the i-th axis into intervals of size `ϵᵢ`.
+4. `RectangularBinning(ϵ::Vector{Float64})` divides the i-th axis into intervals of size 
+    `ϵ[i]`.
+
+## Custom ranges along each axis
+
+
+5. `RectangularBinning(ϵ::Tuple{Vector{Tuple{Float64,Float64}},Int64})` creates intervals 
+    along each axis from ranges indicated by a vector of `(min, max)` tuples , then divides 
+    each axis into the same integer number of equal-length intervals. 
+    
+It's probably easier to use the following constructors
+
+- `RectangularBinning(minmaxes::Vector{Tuple{Vararg{T, N}}}, n_intervals::Int)` takes a 
+    vector of tuples indiciating the (min, max) along each axis and `n_intervals` that 
+    indicates how many equal-length intervals those ranges should be split into. 
+    
+- `RectangularBinning(minmaxes::Vector{<:AbstractRange{T}}, n_intervals::Int)` does the 
+    same, but the arguments are provided as ranges.
 """
 struct RectangularBinning <: RectangularBinningScheme
     ϵ::Union{Int, Float64, Vector{Int}, Vector{Float64}, Tuple{Vector{Tuple{Float64,Float64}},Int64}}
 end
 
 
+RectangularBinning(minmaxes::Vector{Tuple{Vararg{T, N}}}, n_intervals::Int) where {T, N} = 
+    RectangularBinning(([float.(x) for x in minmaxes], n_intervals))
+
+
+function RectangularBinning(minmaxes::Vector{<:AbstractRange{T}}, n_intervals::Int) where T
+    v = [(minimum(x), maximum(x)) for x in minmaxes]
+    RectangularBinning(v, n_intervals)
+end
+
+
+function RectangularBinning(n_intervals::Int, 
+        minmaxes::Vararg{<:AbstractRange{T}, N}) where {T, N}
+    v = [(minimum(x), maximum(x)) for x in minmaxes]
+    RectangularBinning(v, n_intervals)
+end
