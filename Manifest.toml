@@ -6,6 +6,12 @@ git-tree-sha1 = "6a1a371393e56f5e8d5657fe4da4b11aea0bfbae"
 uuid = "4fba245c-0d91-5ea0-9b3e-6abc04ee57a9"
 version = "0.1.1"
 
+[[AxisAlgorithms]]
+deps = ["Compat", "WoodburyMatrices"]
+git-tree-sha1 = "99dabbe853e4f641ab21a676131f2cf9fb29937e"
+uuid = "13072b0f-2c55-5437-9ae7-d433b7a33950"
+version = "0.3.0"
+
 [[Base64]]
 uuid = "2a0f44e3-6c83-55bd-87e4-b1978d98bd5f"
 
@@ -109,6 +115,12 @@ version = "0.10.3"
 deps = ["Markdown"]
 uuid = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
 
+[[Interpolations]]
+deps = ["AxisAlgorithms", "LinearAlgebra", "OffsetArrays", "Random", "Ratios", "SharedArrays", "SparseArrays", "StaticArrays", "Test", "WoodburyMatrices"]
+git-tree-sha1 = "e8d1c381b1dc5343e5b6d37265acbe1de493d512"
+uuid = "a98d9a8b-a2ab-59e6-89dd-64a1c18fca59"
+version = "0.11.2"
+
 [[IteratorInterfaceExtensions]]
 deps = ["Test"]
 git-tree-sha1 = "5484e5ede2a4137b9643f4d646e8e7b87b794415"
@@ -153,6 +165,12 @@ git-tree-sha1 = "f47c5d97cf9a8caefa47e9fa9d99d8fda1a65154"
 uuid = "b8a86587-4115-5ab1-83bc-aa920d37bbce"
 version = "0.4.3"
 
+[[OffsetArrays]]
+deps = ["DelimitedFiles", "Test"]
+git-tree-sha1 = "e6893807f09c1d5517861ded8b203cb96cb7d44a"
+uuid = "6fe1bfb0-de20-5000-8ca7-80f57d26f881"
+version = "0.10.0"
+
 [[OrderedCollections]]
 deps = ["Random", "Serialization", "Test"]
 git-tree-sha1 = "85619a3f3e17bb4761fe1b1fd47f0e979f964d5b"
@@ -180,6 +198,12 @@ uuid = "3fa0cd96-eef1-5676-8a61-b3b8758bbffb"
 [[Random]]
 deps = ["Serialization"]
 uuid = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
+
+[[Ratios]]
+deps = ["Compat"]
+git-tree-sha1 = "cdbbe0f350581296f3a2e3e7a91b214121934407"
+uuid = "c84ed2f1-dad5-54f0-aa8e-dbefe2724439"
+version = "0.3.1"
 
 [[RecipesBase]]
 deps = ["Random", "Test"]
@@ -294,3 +318,9 @@ uuid = "cf7118a7-6976-5b1a-9a39-7adc72f591a4"
 
 [[Unicode]]
 uuid = "4ec0a83e-493e-50e2-b9ac-8f72acf5a8f5"
+
+[[WoodburyMatrices]]
+deps = ["LinearAlgebra", "Random", "SparseArrays", "Test"]
+git-tree-sha1 = "21772c33b447757ec7d3e61fcdfb9ea5c47eedcf"
+uuid = "efce3f68-66dc-5838-9240-27a6d6f5f9b6"
+version = "0.4.1"
