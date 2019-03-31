@@ -1,3 +1,5 @@
+using DynamicalSystems, CausalityToolsBase
+
 D = Dataset(rand(1000, 4))
 
 # Compute the mutual information between the first and second 
