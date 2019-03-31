@@ -32,9 +32,10 @@ abstract type RectangularBinningScheme end
 
 
 """
-    TriangulationBinningScheme
+    TriangulationBinning
     
-A binning scheme for a triangulated simplex partition.
+Instructions for creating a triangulation partition in which a set of points is divided 
+into simplices.
 """
 struct TriangulationBinning <: TriangulationBinningScheme end
 
@@ -96,7 +97,13 @@ end
     RectangularBinning(ϵ)
     
 Instructions for creating a rectangular box partition using the binning scheme `ϵ`. 
-The following `ϵ` are valid:
+
+# Fields 
+- **`ϵ`**: A valid binning scheme. 
+
+# Valid binning schemes
+
+The following `ϵ` are valid.
 
 ## Data ranges along each axis dictated by data ranges 
 
