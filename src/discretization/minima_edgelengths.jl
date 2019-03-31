@@ -10,14 +10,14 @@ get_minmaxes
 
 
 """
-    get_minima(pts) -> Vector{Float}
+    get_minima(pts) -> SVector
 
 Return the minima along each axis of the dataset `pts`.
 """
 function get_minima end
 
 """
-    get_maxima(pts) -> Vector{Float}
+    get_maxima(pts) -> SVector
 
 Return the maxima along each axis of the dataset `pts`.
 """
@@ -58,14 +58,27 @@ end
 
 
 """
-    get_minima_and_edgelengths(points, binning_scheme::RectangularBinning) -> (Vector{Float}, Vector{Float})
+    get_minima_and_edgelengths(points, 
+        binning_scheme::RectangularBinning) -> (Vector{Float}, Vector{Float})
 
 Find the minima along each axis of the embedding, and computes appropriate
-`edge_lengths` given a rectangular `binning_scheme`, which provide instructions on how to 
+edge lengths given a rectangular `binning_scheme`, which provide instructions on how to 
 grid the space. Assumes the input is a vector of points.
 
 See documentation for [`RectangularBinning`](@ref) for details on the 
 binning scheme.
+
+# Example 
+
+```julia
+using DynamicalSystems, CausalityToolsBase
+pts = Dataset([rand(4) for i = 1:1000])
+
+get_minima_and_edgelengths(pts, RectangularBinning(0.6))
+get_minima_and_edgelengths(pts, RectangularBinning([0.5, 0.3, 0.4, 0.4]))
+get_minima_and_edgelengths(pts, RectangularBinning(10))
+get_minima_and_edgelengths(pts, RectangularBinning([10, 8, 5, 4]))
+```
 """
 function get_minima_and_edgelengths(points, binning_scheme::RectangularBinning)
     ϵ = binning_scheme.ϵ
@@ -111,6 +124,18 @@ end
 
 Return the box edge length along each axis resulting from discretizing `pts` on a 
 rectangular grid specified by `binning_scheme`.
+
+# Example 
+
+```julia
+using DynamicalSystems, CausalityToolsBase
+pts = Dataset([rand(5) for i = 1:1000])
+
+get_edgelengths(pts, RectangularBinning(0.6))
+get_edgelengths(pts, RectangularBinning([0.5, 0.3, 0.3, 0.4, 0.4]))
+get_edgelengths(pts, RectangularBinning(8))
+get_edgelengths(pts, RectangularBinning([10, 8, 5, 4, 22]))
+```
 """
 function get_edgelengths end
 

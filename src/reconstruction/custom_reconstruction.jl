@@ -81,7 +81,14 @@ Base.length(l::Positions) = length(l.positions)
 Base.iterate(l::Positions) = iterate(l.positions)
 Base.iterate(l::Positions, state) = iterate(l.positions, state)
 
+"""
+    CustomReconstruction
 
+A type that holds a custom delay reconstruction constructed by `customembed`.
+
+# Fields 
+- **`reconstructed_pts::Dataset`**: The reconstructed points.
+"""
 struct CustomReconstruction{dim, T}
     reconstructed_pts::Dataset{dim, T}
     
@@ -198,6 +205,34 @@ a lag of `lags[i]`.
 
 *Note: `pts[k]` must refer to the `k`th point of the dataset,
 not the `k`th dynamical variable/column.*
+
+# Example 
+
+Say we want to construct an appropriate delay reconstruction for transfer entropy (TE) 
+analysis
+
+```math
+E = \\{S_{pp}, T_{pp}, T_f \\}= \\{x_t, (y_t, y_{t-\\tau}), y_{t+\\eta} \\}``),
+```
+
+so that we're computing the following TE
+
+```math
+TE_{x \\to y} =  \\int_E P(x_t, y_{t-\\tau} y_t, y_{t + \\eta}) \\log{\\left( \\dfrac{P(y_{t + \\eta} | (y_t, y_{t - \\tau}, x_t)}{P(y_{t + \\eta} | y_t, y_{t-\\tau})} \\right)}.
+```
+
+We'll use a prediction lag ``\\eta = 2`` and use first minima of the lagged mutual 
+information function for the embedding delay ``\\tau``.
+
+```julia
+using CausalityToolsBase, DynamicalSystems
+
+x = rand(100)
+y = rand(100)
+D = Dataset(x, y)
+embedlag = optimal_delay(y)
+CustomReconstruction(D, Positions(2, 2, 2, 1), Lags(2, 0, embedlag, 0))
+```
 """
 function customembed(pts, positions::Positions, lags::Lags)
         
@@ -235,21 +270,12 @@ function customembed(pts, positions::Positions, lags::Lags)
     return CustomReconstruction(Dataset(embeddingpts))
 end
 
-"""
-    customembed(pts)
 
-Wrap the set of points (`pts`) in a `CustomReconstruction` instance, 
-not lagging any of the variables.
-        
-*Note: `pts[k]` must refer to the `k`th point of the dataset,
-not the `k`th dynamical variable/column.*
-"""
 function customembed(pts)
     CustomReconstruction(pts)
 end
 
 
-# Add encode method for CustomReconstruction instances.
 function encode(points::CustomReconstruction{dim, T}, reference_point, edgelengths) where {dim, T}
     [encode(points[i], reference_point, edgelengths) for i = 1:length(points)]
 end
