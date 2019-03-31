@@ -8,6 +8,14 @@ Encode a point into its integer bin labels relative to some `reference_point`
 `edgelengths` (one for each axis). The first bin on the positive side of 
 the reference point is indexed with 0, and the first bin on the negative 
 side of the reference point is indexed with -1.
+
+## Example 
+
+```julia
+refpoint = [0, 0, 0]
+steps = [0.2, 0.2, 0.3]
+encode(rand(3), refpoint, steps)
+```
 """
 function encode end 
 
