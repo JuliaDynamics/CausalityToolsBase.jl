@@ -44,31 +44,30 @@ D = Dataset(pts);
 
 ϵs = [5, 0.5, [0.3 for i = 1:5], [10 for i = 1:5], (get_minmaxes(pts), 10)]
 
-
-# Infer that we want a rectangular binning.
 for ϵ in ϵs
-    @test get_edgelengths(pts, ϵ) isa Vector{Float64}
-    @test get_edgelengths(D, ϵ) isa Vector{Float64}
-    @test get_edgelengths(spts, ϵ) isa Vector{Float64}
-    @test get_edgelengths(mpts, ϵ) isa Vector{Float64}
+    ϵx = RectangularBinning(ϵ)
+    
+    @test get_edgelengths(pts, ϵx) isa Vector{Float64}
+    @test get_edgelengths(D, ϵx) isa Vector{Float64}
+    @test get_edgelengths(spts, ϵx) isa Vector{Float64}
+    @test get_edgelengths(mpts, ϵx) isa Vector{Float64}
 
-    @test get_minima_and_edgelengths(pts, ϵ) isa Tuple{Vector{Float64}, Vector{Float64}}
-    @test get_minima_and_edgelengths(D, ϵ) isa Tuple{Vector{Float64}, Vector{Float64}}
-    @test get_minima_and_edgelengths(spts, ϵ) isa Tuple{Vector{Float64}, Vector{Float64}}
-    @test get_minima_and_edgelengths(mpts, ϵ) isa Tuple{Vector{Float64}, Vector{Float64}}
+    @test get_minima_and_edgelengths(pts, ϵx) isa Tuple{Vector{Float64}, Vector{Float64}}
+    @test get_minima_and_edgelengths(D, ϵx) isa Tuple{Vector{Float64}, Vector{Float64}}
+    @test get_minima_and_edgelengths(spts, ϵx) isa Tuple{Vector{Float64}, Vector{Float64}}
+    @test get_minima_and_edgelengths(mpts, ϵx) isa Tuple{Vector{Float64}, Vector{Float64}}
 end
 
-# Being explicit that we want a rectangular binning
-for ϵ in ϵs
-    ϵ = RectangularBinning(ϵ)
+@testset "Data-informed ranges are expanded properly when splitting axes into N intervals" begin 
+    pts = Dataset([rand(3) for i = 1:100])
+    mins, maxs = minmaxima(pts)
     
-    @test get_edgelengths(pts, ϵ) isa Vector{Float64}
-    @test get_edgelengths(D, ϵ) isa Vector{Float64}
-    @test get_edgelengths(spts, ϵ) isa Vector{Float64}
-    @test get_edgelengths(mpts, ϵ) isa Vector{Float64}
+    axisminima, edgelengths = get_minima_and_edgelengths(pts, RectangularBinning([3, 3, 3]))
+    @test all((mins .+ edgelengths .* 3) .> maxs)
+    @test isapprox((mins .+ edgelengths .* 3) .- maxs, edgelengths ./ 100, atol = 1e-4)
+    
+    axisminima, edgelengths = get_minima_and_edgelengths(pts, RectangularBinning(5))
+    @test all((mins .+ edgelengths .* 5) .> maxs)
+    @test isapprox((mins .+ edgelengths .* 5) .- maxs, edgelengths ./ 100, atol = 1e-4)
 
-    @test get_minima_and_edgelengths(pts, ϵ) isa Tuple{Vector{Float64}, Vector{Float64}}
-    @test get_minima_and_edgelengths(D, ϵ) isa Tuple{Vector{Float64}, Vector{Float64}}
-    @test get_minima_and_edgelengths(spts, ϵ) isa Tuple{Vector{Float64}, Vector{Float64}}
-    @test get_minima_and_edgelengths(mpts, ϵ) isa Tuple{Vector{Float64}, Vector{Float64}}
 end
