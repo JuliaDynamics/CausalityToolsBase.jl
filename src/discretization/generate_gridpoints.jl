@@ -76,9 +76,13 @@ Provided a suitable binning scheme is given, this grid will provide a
 covering of `points`. See the documentation for `RectangularBinning` for 
 more details. 
 
-## Arguments 
+# Arguments 
+
 - **`points`**: A vector of points or a `Dataset` instance. 
-- **`binning_scheme`**: A `RectangularBinning` instance.
+
+- **`binning_scheme`**: A `RectangularBinning` instance. See docs for `RectangularBinning`
+    for more details.
+
 - **`grid`**: A `GridType` instance. The grid follows the same convention 
     as in Interpolations.jl. Valid choices are `OnGrid()` (uses the bin 
     origins as the grid points), and `OnCell()`, which adds an additional 
@@ -86,7 +90,7 @@ more details.
     extrema along each axis and retursn the centers of the resulting 
     grid cells.
 
-## Examples 
+# Examples 
 
 For example,
 
@@ -98,9 +102,7 @@ generate_gridpoints(pts, RectangularBinning(10), OnGrid()
 ```
 
 generates a rectangular grid covering the range of `pts` constructed 
-by subdividing each coordinate axis into 10 equal-length intervals. 
-
-For example,
+by subdividing each coordinate axis into 10 equal-length intervals. Next,
 
 ```julia 
 using CausalityToolsBase, DelayEmbeddings
