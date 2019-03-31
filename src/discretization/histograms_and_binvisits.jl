@@ -19,7 +19,7 @@ joint_visits(pts, RectangularBinning(0.2))
 ```
 """
 function joint_visits(points, binning_scheme::RectangularBinning)
-    axis_minima, box_edge_lengths = get_minima_and_edgelengths(points, ϵ)
+    axis_minima, box_edge_lengths = get_minima_and_edgelengths(points, binning_scheme)
     encode(points, axis_minima, box_edge_lengths)
 end
 
@@ -44,10 +44,10 @@ marginal_visits(pts, RectangularBinning(0.3), 2:5)
 ```
 """
 function marginal_visits(points, binning_scheme::RectangularBinning, dims)
-    axis_minima, box_edge_lengths = get_minima_and_edgelengths(points, ϵ)
+    axis_minima, box_edge_lengths = get_minima_and_edgelengths(points, binning_scheme)
     dim = length(axis_minima)
     if sort(collect(dims)) == sort(collect(1:dim))
-        joint_visits(points, ϵ)
+        joint_visits(points, binning_scheme)
     else
         [encode(pt, axis_minima, box_edge_lengths)[dims] for pt in points]
     end
