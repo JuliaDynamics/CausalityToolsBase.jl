@@ -4,10 +4,10 @@ export mutualinfo
 Dataset(cr::CustomReconstruction{D, T}) where {D, T} = Dataset(cr.reconstructed_pts)
 
 """
-    mutualinfo(pts, marginalinds_x, marginalinds_y, kernel::Kernel = BoxKernel(); 
+    mutualinfo(pts, marginalinds_x, marginalinds_y, kernel::BoxKernel; 
         b = 2, kwargs...)
     
-Estimate the mutual information using a kernel density estimator (defaults to `BoxKernel()`).
+Estimate the mutual information using a kernel density estimator [1].
 
 # Arguments 
 
@@ -27,10 +27,15 @@ Estimate the mutual information using a kernel density estimator (defaults to `B
 
 - **`b`**: The base of the logarithm, which determines the unit of information (e.g. 
     `b = 2` gives the information in bits).
+
+# References 
+
+[1] [Steuer, R., Kurths, J., Daub, C.O., Weise, J. and Selbig, J., 2002. The mutual information: detecting and evaluating dependencies between variables. Bioinformatics, 18(suppl_2), pp.S231-S240](https://academic.oup.com/bioinformatics/article/18/suppl_2/S231/190783).
+
 """
-function mutualinfo(pts, marginalinds_x, marginalinds_y, kernel::Kernel = BoxKernel(); 
+function mutualinfo(pts, marginalinds_x, marginalinds_y, kernel::BoxKernel; 
         b = 2, normalise = true, kwargs...)
-    
+    n_pts = length(pts)
     X = Dataset(pts[:, marginalinds_x])
     Y = Dataset(pts[:, marginalinds_y])
     XY = Dataset(pts[:, [marginalinds_x; marginalinds_y]])
@@ -44,6 +49,9 @@ function mutualinfo(pts, marginalinds_x, marginalinds_y, kernel::Kernel = BoxKer
     P_Y = density_Y ./ n_pts 
     P_XY = density_XY ./ n_pts
 
+    # Entropies are averages over probability distributions, so we may 
+    # do a simple normalised sum if the data accurately represent the 
+    # underlying distribution.
     MI = sum(log.(P_XY, b) .- (log.(P_X, b) .+ log.(P_Y, b))) / n_pts
 end
 
