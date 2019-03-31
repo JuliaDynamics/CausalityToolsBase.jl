@@ -40,12 +40,10 @@ function mutualinfo(pts, marginalinds_x, marginalinds_y, kernel::Kernel = BoxKer
     density_Y = kerneldensity(Y, Y, kernel, normalise = normalise; kwargs...)
     density_XY = kerneldensity(XY, XY, kernel, normalise = normalise; kwargs...)
 
-    n_pts = length(pts)
-
     P_X = density_X ./ n_pts 
     P_Y = density_Y ./ n_pts 
     P_XY = density_XY ./ n_pts
 
-    MI = sum(log.(P_XY, b) .- (log.(P_X, b) .+ log.(P_Y, b)))
+    MI = sum(log.(P_XY, b) .- (log.(P_X, b) .+ log.(P_Y, b))) / n_pts
 end
 
