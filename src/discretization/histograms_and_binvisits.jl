@@ -4,24 +4,24 @@ marginal_visits,
 non0hist
 
 """
-    joint_visits(points, ϵ)
+    joint_visits(points, ϵ::RectangularBinning)
 
 Determine which bins are visited by `points` given the rectangular binning
 scheme `ϵ`. Bins are referenced relative to the axis minimum.
 """
-function joint_visits(points, ϵ)
+function joint_visits(points, ϵ::RectangularBinning)
     axis_minima, box_edge_lengths = get_minima_and_edgelengths(points, ϵ)
     encode(points, axis_minima, box_edge_lengths)
 end
 
 """
-    marginal_visits(points, ϵ, dims)
+    marginal_visits(points, ϵ::RectangularBinning, dims)
 
 Determine which bins are visited by `points` given the rectangular binning
 scheme `ϵ`, only along the desired dimensions `dims`. Bins are referenced 
 relative to the axis minimum.
 """
-function marginal_visits(points, ϵ, dims)
+function marginal_visits(points, ϵ::RectangularBinning, dims)
     axis_minima, box_edge_lengths = get_minima_and_edgelengths(points, ϵ)
     dim = length(axis_minima)
     if sort(collect(dims)) == sort(collect(1:dim))
@@ -80,7 +80,7 @@ function non0hist(bin_visits::Vector{T}) where {T <: Union{Vector, SVector, MVec
 end
 
 """
-    non0hist(points, ϵ, dims)
+    non0hist(points, ϵ::RectangularBinning, dims)
 
 Determine which bins are visited by `points` given the rectangular binning
 scheme `ϵ`, considering only the marginal along dimensions `dims`. Bins are referenced 
@@ -90,7 +90,7 @@ Returns the unordered histogram (vistitation frequency) over the array of bin vi
 
 This method extends `ChaosTools.non0hist`.
 """
-function non0hist(points, ϵ, dims)
+function non0hist(points, ϵ::RectangularBinning, dims)
     bin_visits = marginal_visits(points, ϵ, dims)
     L = length(bin_visits)
     hist = Vector{Float64}()
