@@ -81,7 +81,14 @@ Base.length(l::Positions) = length(l.positions)
 Base.iterate(l::Positions) = iterate(l.positions)
 Base.iterate(l::Positions, state) = iterate(l.positions, state)
 
+"""
+    CustomReconstruction
 
+A type that holds a custom delay reconstruction constructed by `customembed`.
+
+# Fields 
+- **`reconstructed_pts::Dataset`**: The reconstructed points.
+"""
 struct CustomReconstruction{dim, T}
     reconstructed_pts::Dataset{dim, T}
     
