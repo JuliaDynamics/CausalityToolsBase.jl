@@ -1,5 +1,13 @@
 # Changelog
 
+## Release v0.4.2
+
+### Improvements
+
+- Updated docstrings for `Positions`.
+- Updated docstrings for `TriangulationBinning`.
+
+
 ## Release v0.4.0
 
 ### Breaking changes

@@ -42,7 +42,7 @@ Base.iterate(l::Lags, state) = iterate(l.lags, state)
 """
     Positions
 
-Wrapper type for the positions the different dynamical variables appear in when 
+Type specifying the positions the different dynamical variables appear in when 
 constructing a custom state space reconstruction. Used in combination with
 `Lags` to specify how a `CustomReconstruction` should be constructed. Each 
 of the positions must refer to a dynamical variable (column) actually present in the 
@@ -50,19 +50,15 @@ dataset.
 
 ## Examples
 
-- `Positions(1, 2, 1, 5)` indicates a 4-dimensional state space reconstruction where 
-    1. the 1st coordinate axis of the reconstruction should be formed from the 
-    first variable/column of the input data.
-    2. the 2nd coordinate axis of the reconstruction should be formed from the 
-    2nd variable/column of the input data.
-    3. the 3rd coordinate axis of the reconstruction should be formed from the 
-    1st variable/column of the input data.
-    4. the 4th coordinate axis of the reconstruction should be formed from the 
-    5th variable/column of the input data.
-
+- `Positions(1, 2, 1, 5)` indicates a 4-dimensional state space reconstruction where the 1st 
+    coordinate axis of the reconstruction should be formed from the first variable/column of 
+    the input data, the 2nd coordinate axis of the reconstruction should be formed from the 
+    2nd variable/column of the input data, the 3rd coordinate axis of the reconstruction should 
+    be formed from the 1st variable/column of the input data, the 4th coordinate axis of the 
+    reconstruction should be formed from the 5th variable/column of the input data.
 - `Positions(-1, 2)` indicates a 2-dimensional reconstruction, but will not work, because 
     each position must refer to the index of a dynamical variable (column) of a dataset 
-    (indexed from 1 and up).
+    (indexed from 1 and up, so negative values will not work).
 """
 struct Positions <: ReconstructionParameters
     positions
@@ -180,8 +176,6 @@ the ordering of dynamical variables and allows for negative lags. The `positions
 indicates which dynamical variables are mapped to which variables in the final 
 reconstruction, while `lags` indicates the lags for each of the embedding variables. 
 
-Example: `customembed([rand(3) for i = 1:50], Positions(1, 2, 1, 3), Lags(0, 0, 1, -2)` 
-gives a 4-dimensional embedding with state vectors `(x1(t), x2(t), x1(t + 1), x3(t - 2))`. 
 
 Note: `customembed` expects an array of *state vectors*, i.e. `pts[k]` must refer to the 
 `k`th point of the dataset, not the `k`th dynamical variable/column.*. To embed a vector of 
@@ -192,6 +186,41 @@ state vectors `(x(t), y(t), y(t + 1))`.
 
 Pre-embedded points may be wrapped in a `CustomReconstruction` instance by simply calling 
 `customembed(preembedded_pts)` without any position/lag instructions.
+
+## Examples
+
+### Example 1
+```julia 
+customembed([rand(3) for i = 1:50], Positions(1, 2, 1, 3), Lags(0, 0, 1, -2)
+```
+
+gives a 4-dimensional embedding with state vectors `(x1(t), x2(t), x1(t + 1), x3(t - 2))`. 
+
+### Example 2
+
+Say we want to construct an appropriate delay reconstruction for transfer entropy (TE) analysis
+    
+```math
+E = \\{S_{pp}, T_{pp}, T_f \\}= \\{x_t, (y_t, y_{t-\\tau}), y_{t+\\eta} \\}``),
+```
+    
+so that we're computing the following TE
+    
+```math
+TE_{x \\to y} =  \\int_E P(x_t, y_{t-\\tau} y_t, y_{t + \\eta}) \\log{\\left( \\dfrac{P(y_{t + \\eta} | (y_t, y_{t - \\tau}, x_t)}{P(y_{t + \\eta} | y_t, y_{t-\\tau})} \\right)}.
+```
+    
+We'll use a prediction lag ``\\eta = 2`` and use first minima of the lagged mutual 
+information function for the embedding delay ``\\tau``.
+    
+```julia
+using CausalityToolsBase, DynamicalSystems
+    
+x, y = rand(100), rand(100)
+D = Dataset(x, y)
+embedlag = optimal_delay(y)
+CustomReconstruction(D, Positions(2, 2, 2, 1), Lags(2, 0, embedlag, 0))
+```
 """
 function customembed end 
 
@@ -205,34 +234,6 @@ a lag of `lags[i]`.
 
 *Note: `pts[k]` must refer to the `k`th point of the dataset,
 not the `k`th dynamical variable/column.*
-
-# Example 
-
-Say we want to construct an appropriate delay reconstruction for transfer entropy (TE) 
-analysis
-
-```math
-E = \\{S_{pp}, T_{pp}, T_f \\}= \\{x_t, (y_t, y_{t-\\tau}), y_{t+\\eta} \\}``),
-```
-
-so that we're computing the following TE
-
-```math
-TE_{x \\to y} =  \\int_E P(x_t, y_{t-\\tau} y_t, y_{t + \\eta}) \\log{\\left( \\dfrac{P(y_{t + \\eta} | (y_t, y_{t - \\tau}, x_t)}{P(y_{t + \\eta} | y_t, y_{t-\\tau})} \\right)}.
-```
-
-We'll use a prediction lag ``\\eta = 2`` and use first minima of the lagged mutual 
-information function for the embedding delay ``\\tau``.
-
-```julia
-using CausalityToolsBase, DynamicalSystems
-
-x = rand(100)
-y = rand(100)
-D = Dataset(x, y)
-embedlag = optimal_delay(y)
-CustomReconstruction(D, Positions(2, 2, 2, 1), Lags(2, 0, embedlag, 0))
-```
 """
 function customembed(pts, positions::Positions, lags::Lags)
         
