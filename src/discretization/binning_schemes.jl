@@ -34,8 +34,8 @@ abstract type RectangularBinningScheme end
 """
     TriangulationBinning
     
-Instructions for creating a triangulation partition in which a set of points is divided 
-into simplices.
+A type indicating that a triangulation partition in which a set of points is divided 
+into simplices should be used.
 """
 struct TriangulationBinning <: TriangulationBinningScheme end
 
