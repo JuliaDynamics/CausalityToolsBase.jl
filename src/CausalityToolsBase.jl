@@ -10,6 +10,10 @@ module CausalityToolsBase
 	
 	include("kerneldensity/kerneldensity.jl")
 	include("mutual_information/mutualinformation.jl") # must be loaded after kerneldensity
+	
+	# Defines supertypes for estimators and estimator parameter types
+	include("causalityestimator.jl")
+	include("causalityestimatorparams.jl")
 
 end # module
 
