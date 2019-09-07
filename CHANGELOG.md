@@ -1,5 +1,11 @@
 # Changelog
 
+## Release v0.5.0
+
+- Add abstract type `CausalityEstimator` that will be the supertype of all causality estimator types in the CausalityTools.jl ecosystem.
+- Add abstract type `CausalityEstimatorParams` that will be the supertype of all causality estimator parameter types in the CausalityTools.jl ecosystem.
+
+
 ## Release v0.4.2
 
 ### Improvements
