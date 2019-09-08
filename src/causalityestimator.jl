@@ -10,6 +10,7 @@ abstract estimator type hierarchies could be:
 - `TransferEntropyEstimator <: CausalityEstimator`
 - `CrossMappingEstimator <: CausalityEstimator`
 
+
 Specific estimator types are named according to the algorithm. Examples of 
 complete type hierarchies for different estimators could be:
 
@@ -20,8 +21,8 @@ complete type hierarchies for different estimators could be:
 - `JointDistanceDistribution <: JointDistanceDistributionEstimator <: CausalityEstimator`.
 
 Each estimator type, also the abstract ones, have a corresponding parameter 
-type where `Test` is appending to the type name, for example 
-`VisitationFrequencyTest <: TransferEntropyEstimatorTest <: CausalityEstimatorTest`.
+type where `Params` is appending to the type name, for example 
+`VisitationFrequencyParams <: TransferEntropyEstimatorParams <: CausalityEstimatorParams`.
 """
 abstract type CausalityEstimator end
 
