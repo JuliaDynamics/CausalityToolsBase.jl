@@ -1,5 +1,11 @@
 # Changelog
 
+## Release v0.6.0
+
+- Julia version >= 1.1 is required for releases >= 0.6.0.
+- Changed type name `CausalityEstimatorParams` to `CausalityTest` because all tests are
+completely specified by its parameters. This is the supertype for all causality tests in the CausalityTools.jl ecosystem.
+
 ## Release v0.5.0
 
 - Add abstract type `CausalityEstimator` that will be the supertype of all causality estimator types in the CausalityTools.jl ecosystem.
