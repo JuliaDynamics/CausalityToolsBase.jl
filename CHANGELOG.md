@@ -1,5 +1,10 @@
 # Changelog
 
+## Release v0.7.0
+
+- Added `causality` function. The rest of the CausalityTools ecosystem extends this function
+    with methods that specialize on different types of input.  
+
 ## Release v0.6.0
 
 - Julia version >= 1.1 is required for releases >= 0.6.0.
