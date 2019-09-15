@@ -14,6 +14,7 @@ module CausalityToolsBase
 	# Defines supertypes for estimators and estimator parameter types
 	include("causalityestimator.jl")
 	include("causalitytest.jl")
+	include("causality.jl")
 
 end # module
 
