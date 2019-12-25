@@ -1,5 +1,9 @@
 # Changelog
 
+## Release v0.7.1
+
+- Add upper requirements on packages, so that we can use JuliaRegistrator to push new releases.
+
 ## Release v0.7.0
 
 - Added `causality` function. The rest of the CausalityTools ecosystem extends this function
