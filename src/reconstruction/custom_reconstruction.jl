@@ -11,9 +11,8 @@ abstract type ReconstructionParameters end
 """
     Lags
 
-Wrapper type for lags used when performing custom state space reconstructions.
-Used in combination with `Positions` to specify how a `CustomReconstruction`
-should be constructed.
+The lags used when performing custom state space reconstructions. Used in combination 
+with `Positions` to specify how a `CustomReconstruction` should be constructed.
 
 ## Examples
 
@@ -42,11 +41,12 @@ Base.iterate(l::Lags, state) = iterate(l.lags, state)
 """
     Positions
 
-Type specifying the positions the different dynamical variables appear in when 
+Specifies the positions the different dynamical variables appear in when 
 constructing a custom state space reconstruction. Used in combination with
-`Lags` to specify how a `CustomReconstruction` should be constructed. Each 
-of the positions must refer to a dynamical variable (column) actually present in the 
-dataset.
+`Lags` to specify how a `CustomReconstruction` should be constructed. 
+
+Each of the positions must refer to a dynamical variable (column) actually 
+present in the dataset.
 
 ## Examples
 

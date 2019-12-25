@@ -98,7 +98,7 @@ For example,
 using CausalityToolsBase, DelayEmbeddings
 
 pts = Dataset([rand(3) for i = 1:100])
-generate_gridpoints(pts, RectangularBinning(10), OnGrid()
+generate_gridpoints(pts, RectangularBinning(10), OnGrid())
 ```
 
 generates a rectangular grid covering the range of `pts` constructed 
@@ -108,7 +108,7 @@ by subdividing each coordinate axis into 10 equal-length intervals. Next,
 using CausalityToolsBase, DelayEmbeddings
 
 pts = Dataset([rand(3) for i = 1:100])
-generate_gridpoints(pts, RectangularBinning(10), OnCell()
+generate_gridpoints(pts, RectangularBinning(10), OnCell())
 ```
 
 will do the same, but adds another interval (11 in total), shifts the 
