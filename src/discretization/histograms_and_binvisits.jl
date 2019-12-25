@@ -13,8 +13,8 @@ scheme `ϵ`. Bins are referenced relative to the axis minimum.
 
 ```julia
 using DynamicalSystems, CausalityToolsBase
-pts = Dataset([rand(5) for i = 1:100]);
 
+pts = Dataset([rand(5) for i = 1:100]);
 joint_visits(pts, RectangularBinning(0.2))
 ```
 """
@@ -34,6 +34,7 @@ relative to the axis minimum.
 
 ```julia
 using DynamicalSystems, CausalityToolsBase
+
 pts = Dataset([rand(5) for i = 1:100]);
 
 # Marginal visits along dimension 3 and 5
@@ -63,6 +64,7 @@ dimensions `dims`.
 
 ```julia
 using DynamicalSystems, CausalityToolsBase
+
 pts = Dataset([rand(5) for i = 1:100]);
 
 # First compute joint visits, then marginal visits along dimensions 1 and 4

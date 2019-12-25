@@ -12,6 +12,8 @@ side of the reference point is indexed with -1.
 ## Example 
 
 ```julia
+using CausalityToolsBase
+
 refpoint = [0, 0, 0]
 steps = [0.2, 0.2, 0.3]
 encode(rand(3), refpoint, steps)
