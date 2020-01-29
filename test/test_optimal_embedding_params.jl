@@ -1,12 +1,12 @@
 x = rand(100)
 
 @test optimal_delay(x; τ = 1:10) isa Int
-@test optimal_delay(x, method = "ac_zero") isa Int
-@test optimal_dimension(x, 2, method = "f1nn", method_delay = "mi_min") isa Int
+@test optimal_delay(x, method_delay = "ac_zero") isa Int
+@test optimal_dimension(x, 2, method_dim = "f1nn", method_delay = "mi_min") isa Int
 @test optimal_dimension(x, method_delay = "mi_min") isa Int
 
-opt_scheme = OptimiseDelay(method = "mi_min", kwargs = (nbins = 10, ))
-opt_scheme = OptimiseDelay(method = "ac_zero")
+opt_scheme = OptimiseDelay(method_delay = "mi_min", kwargs = (nbins = 10, ))
+opt_scheme = OptimiseDelay(method_delay = "ac_zero")
 
 ts = sin.(diff(diff(rand(5000))))
 @test optimal_delay(ts, opt_scheme) isa Int

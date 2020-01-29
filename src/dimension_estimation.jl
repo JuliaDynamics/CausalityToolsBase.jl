@@ -126,7 +126,7 @@ end
 abstract type AbstractParameterOptimisation end
 
 """ 
-    OptimiseDelay
+    OptimiseDelay(method_delay = "ac_zero", maxdelay_frac = 0.1; kwargs...) -> OptimiseDelay
 
 Indicates that the delay parameter for an embedding should be optimised using some estimation procedure.
 
@@ -136,7 +136,7 @@ as a fraction of the time series length.
 
 ## Fields 
 
-- **`method::String = "ac_zero"`**: The delay estimation method. Uses `DynamicalSystems.estimate_delay` 
+- **`method_delay::String = "ac_zero"`**: The delay estimation method. Uses `DynamicalSystems.estimate_delay` 
     under the hood. See its documentation for more info. 
 - **`maxdelay_frac::Number = 0.1`**: The maximum number of delays for which to check, expressed as a fraction of 
     the time series length.
@@ -146,19 +146,25 @@ as a fraction of the time series length.
 ## Example 
 
 ```julia
-opt_scheme = OptimiseDelay(method = "mi_min", kwargs = (nbins = 10, ))
+opt_scheme = OptimiseDelay(method_delay = "mi_min", kwargs = (nbins = 10, ))
 ts = sin.(diff(diff(rand(5000))))
 optimal_delay(ts, opt_scheme)
 ```
 """
 @Base.kwdef struct OptimiseDelay <: AbstractParameterOptimisation
-    method::String = "ac_zero"
+    method_delay::String = "ac_zero"
     maxdelay_frac = 0.1
     kwargs::NamedTuple = NamedTuple()
 end
 
+function Base.show(io::IO, x::OptimiseDelay)
+    s = "OptimiseDelay(method_delay = $(x.method_delay), maxdelay_frac = $(x.maxdelay_frac))"
+    print(io, s)
+end
+
 """ 
-    OptimiseDim
+    OptimiseDim(method_delay::String = "ac_zero", maxdelay_frac::Number = 0.1, 
+        method_dim::String = "f1nn", maxdim::Int = 6) -> OptimiseDim
 
 Indicates that the dimension for an embedding should be optimised using some estimation procedure.
 
@@ -173,7 +179,7 @@ is estimated.
 - **`maxdim::Int = 6`**: The maximum dimension to check for. Dimensions `1:maxdim` will be 
     checked.
 - **`kwargs_dim::NamedTuple`**: Keyword arguments to the dimension estimation method. Empty by default.
-- **`method_delay::String = "mi_min"`**: The delay estimation method.    
+- **`method_delay::String = "ac_zero"`**: The delay estimation method.    
 - **`maxdelay_frac::Number = 0.1`**: The maximum number of delays for which to check, expressed as a fraction of 
     the time series length.
 - **`kwargs_delay::NamedTuple`**: Keyword arguments to the delay estimation method. Empty by default.
@@ -197,6 +203,11 @@ optimal_dimension(ts, opt_scheme)
     kwargs_delay::NamedTuple = NamedTuple()
 end
 
+function Base.show(io::IO, x::OptimiseDim)
+    s = "OptimiseDim(method_delay = $(x.method_delay), method_dim = $(x.method_dim), maxdim = $(x.maxdim), maxdelay_frac = $(x.maxdelay_frac))"
+    print(io, s)
+end
+
 import CausalityToolsBase: optimal_delay, optimal_dimension 
 
 """
@@ -208,7 +219,7 @@ instructions given by the [`OptimiseDelay`](@ref) instance `p`.
 ## Example 
 
 ```julia 
-opt_scheme = OptimiseDelay(method = "ac_zero", kwargs = (nbins = 10, ))
+opt_scheme = OptimiseDelay(method_delay = "ac_zero", kwargs = (nbins = 10, ))
 ts = sin.(diff(diff(rand(5000))))
 optimal_delay(ts, opt_scheme)
 ```
@@ -216,9 +227,9 @@ optimal_delay(ts, opt_scheme)
 function optimal_delay(x, p::OptimiseDelay)
     τs = 1:floor(Int, length(x)*p.maxdelay_frac)
     if length(p.kwargs) > 0
-        estimate_delay(x, p.method, τs; p.kwargs...)
+        estimate_delay(x, p.method_delay, τs; p.kwargs...)
     else
-        estimate_delay(x, p.method, τs)
+        estimate_delay(x, p.method_delay, τs)
     end
 end
 
