@@ -139,8 +139,8 @@ function CustomReconstruction(pts::Dataset{dim, T}, positions::Positions, lags::
 end
 
 function Base.show(io::IO, cr::CustomReconstruction{dim, T} where {dim, T}) 
-    println(string(typeof(cr)))
-    show(cr.reconstructed_pts)
+    print(io, cr.reconstructed_pts)
+    #show(cr.reconstructed_pts)
 end
 
 Base.length(r::CustomReconstruction) = length(r.reconstructed_pts)
