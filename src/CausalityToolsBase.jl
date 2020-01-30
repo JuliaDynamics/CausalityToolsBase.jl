@@ -3,10 +3,18 @@ module CausalityToolsBase
 	import StaticArrays: MVector, SVector
 	import DelayEmbeddings: AbstractDataset, Dataset
 
+	"""
+		AbstractParameterOptimisation
+
+	Abstract type for parameter optimisation types.
+	"""
+	abstract type AbstractParameterOptimisation end
+
 	include("discretization/discretization.jl")
 	include("reconstruction/custom_reconstruction.jl")
 	include("dimension_estimation.jl")
 	include("simplex_intersections.jl")
+
 	
 	include("kerneldensity/kerneldensity.jl")
 	include("mutual_information/mutualinformation.jl") # must be loaded after kerneldensity
