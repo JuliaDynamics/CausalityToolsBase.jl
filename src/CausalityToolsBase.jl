@@ -11,13 +11,13 @@ module CausalityToolsBase
 	abstract type AbstractParameterOptimisation end
 
 	include("discretization/discretization.jl")
-	include("reconstruction/custom_reconstruction.jl")
+	#include("reconstruction/custom_reconstruction.jl")
 	include("dimension_estimation.jl")
 	include("simplex_intersections.jl")
 
 	
 	include("kerneldensity/kerneldensity.jl")
-	include("mutual_information/mutualinformation.jl") # must be loaded after kerneldensity
+	#include("mutual_information/mutualinformation.jl") # must be loaded after kerneldensity
 	
 	# Defines supertypes for estimators and estimator parameter types
 	include("causalityestimator.jl")

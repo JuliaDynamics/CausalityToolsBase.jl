@@ -144,7 +144,7 @@ This method extends `ChaosTools.non0hist`.
 
 # Example 
 ```julia 
-using DynamicalSystems
+using DelayEmbeddings
 pts = Dataset([rand(5) for i = 1:100]);
 
 # Histograms directly from points given a rectangular binning scheme
