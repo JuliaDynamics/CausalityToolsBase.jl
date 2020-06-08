@@ -1,6 +1,6 @@
 x = rand(100)
 
-@test optimal_delay(x; τ = 1:10) isa Int
+@test optimal_delay(x; τs = 1:10) isa Int
 @test optimal_delay(x, method_delay = "ac_zero") isa Int
 @test optimal_dimension(x, 2, method_dim = "f1nn", method_delay = "mi_min") isa Int
 @test optimal_dimension(x, method_delay = "mi_min") isa Int
