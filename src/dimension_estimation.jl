@@ -4,14 +4,13 @@ import DelayEmbeddings.estimate_dimension
 export optimal_delay, optimal_dimension, OptimiseDelay, OptimiseDim
 
 """
-    optimal_delay(v; method = "ac_zero"; τs = 1:1:floor(Int, length(v)/10); kwargs...)
+    optimal_delay(v; method = "mi_min"; τs = 1:1:floor(Int, length(v)/10); kwargs...)
 
 Estimate the optimal embedding lag for `v` among the delays `τs`. 
-    
 
 # Keyword arguments
 
-- **`method::String = "ac_zero"`**: The delay estimation method. 
+- **`method::String = "mi_min"`**: The delay estimation method. 
     Uses `DynamicalSystems.estimate_delay` under the hood. See its documentation for more info.
 - **`τs`**: The lags over which to estimate the embedding lag. Defaults to 10% of the 
     length of the time series.
@@ -26,10 +25,10 @@ using CausalityToolsBase
 ts = diff(rand(100))
 optimal_delay(ts)
 optimal_delay(ts, method = "ac_zero")
-optimal_delay(ts, method = "ac_zero", τs = 1:10)
+optimal_delay(ts, method = "mi_min", τs = 1:10)
 ```
 """
-function optimal_delay(v; method = "ac_zero", τs = 1:1:min(ceil(Int, length(v)/15), 100), kwargs...)
+function optimal_delay(v; method = "mi_min", τs = 1:1:min(ceil(Int, length(v)/10), 100), kwargs...)
     τ = estimate_delay(v, method, τs; kwargs...)
 end
 
@@ -184,7 +183,7 @@ is estimated.
     the time series length.
 - **`kwargs_delay::NamedTuple`**: Keyword arguments to the delay estimation method. Empty by default.
     Keywords `nbins` and `binwidth` are propagated into `DynamicalSystems.mutualinformation` if 
-    `method = mi_min`. See also [`optimal_delay`](@ref).
+    `method = mi_min`. See also `optimal_delay`.
 
 ## Example 
 
