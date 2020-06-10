@@ -1,6 +1,7 @@
 
 export 
 BinningScheme,
+RectangularBinningScheme,
 TriangulationBinningScheme,
 TriangulationBinning,
 RefinedTriangulationBinningMaxRadius,
@@ -16,26 +17,23 @@ The supertype of all binning schemes in the CausalityTools ecosystem.
 abstract type BinningScheme end
 
 """ 
-    TriangulationBinningScheme
+    TriangulationBinningScheme <: BinningScheme
 
 The supertype of all triangulation binning schemes in the CausalityTools ecosystem.
 """ 
-abstract type TriangulationBinningScheme end
+abstract type TriangulationBinningScheme <: BinningScheme end
 
 """ 
-    RectangularBinningScheme
+    RectangularBinningScheme <: BinningScheme
 
 The supertype of all rectangular binning schemes in the CausalityTools ecosystem.
 """ 
-abstract type RectangularBinningScheme end
-
-
+abstract type RectangularBinningScheme <: BinningScheme end
 
 """
-    TriangulationBinning
+    TriangulationBinning <: TriangulationBinningScheme
     
-A type indicating that a triangulation partition in which a set of points is divided 
-into simplices should be used.
+Instructions for creating a triangulated partition.
 """
 struct TriangulationBinning <: TriangulationBinningScheme end
 
@@ -94,29 +92,24 @@ struct RefinedTriangulationBinningSplitQuantile <: TriangulationBinningScheme
 end
 
 """
-    RectangularBinning(ϵ)
+    RectangularBinning(ϵ) <: RectangularBinningScheme
     
 Instructions for creating a rectangular box partition using the binning scheme `ϵ`. 
 
-# Fields 
-- **`ϵ`**: A valid binning scheme. 
+# Types of rectangular binning schemes 
 
-# Valid binning schemes
+## Data-dictated ranges along each axis
 
-The following `ϵ` are valid.
-
-## Data ranges along each axis dictated by data ranges 
-
-1. `RectangularBinning(ϵ::Int)` divides each axis into `ϵ` equal-length intervals, 
+1. `ϵ::Int` divides each axis into `ϵ` equal-length intervals, 
     extending the upper bound 1/100th of a bin size to ensure all points are covered.
 
-2. `RectangularBinning(ϵ::Float64)` divides each axis into intervals of fixed size `ϵ`.
+2. `ϵ::Float64` divides each axis into intervals of fixed size `ϵ`.
 
-3. `RectangularBinning(ϵ::Vector{Int})` divides the i-th axis into `ϵᵢ` equal-length 
+3. `ϵ::Vector{Int}` divides the i-th axis into `ϵᵢ` equal-length 
     intervals, extending the upper bound 1/100th of a bin size to ensure all points are 
     covered.
 
-4. `RectangularBinning(ϵ::Vector{Float64})` divides the i-th axis into intervals of size 
+4. `ϵ::Vector{Float64}` divides the i-th axis into intervals of size 
     `ϵ[i]`.
 
 
@@ -127,7 +120,7 @@ coordinate axis, then constructing equal-length intervals until the data maxima 
 
 Rectangular binnings may also be specified on arbitrary min-max ranges. 
 
-5. `RectangularBinning(ϵ::Tuple{Vector{Tuple{Float64,Float64}},Int64})` creates intervals 
+5. `ϵ::Tuple{Vector{Tuple{Float64,Float64}},Int64}` creates intervals 
     along each axis from ranges indicated by a vector of `(min, max)` tuples, then divides 
     each axis into the same integer number of equal-length intervals. 
     
