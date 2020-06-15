@@ -3,22 +3,20 @@ module CausalityToolsBase
 	import StaticArrays: MVector, SVector
 	import DelayEmbeddings: AbstractDataset, Dataset
 
-	"""
-		AbstractParameterOptimisation
+	# Parameter optimization 
+	include("optimization/parameteroptimization.jl")
 
-	Abstract type for parameter optimisation types.
-	"""
-	abstract type AbstractParameterOptimisation end
-
+	# Discretization
 	include("discretization/discretization.jl")
+
+	# Information theory / entropy estimator interfaces
+	include("Information/Information.jl")
+
+
 	#include("reconstruction/custom_reconstruction.jl")
 	include("dimension_estimation.jl")
 	include("simplex_intersections.jl")
 
-	
-	include("kerneldensity/kerneldensity.jl")
-	#include("mutual_information/mutualinformation.jl") # must be loaded after kerneldensity
-	
 	# Defines supertypes for estimators and estimator parameter types
 	include("causalityestimator.jl")
 	include("causalitytest.jl")

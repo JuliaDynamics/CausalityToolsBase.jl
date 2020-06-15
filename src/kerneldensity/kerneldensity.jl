@@ -3,9 +3,20 @@ import Distances: Metric, Chebyshev, evaluate
 import NearestNeighbors: KDTree, inrange
 import DelayEmbeddings: Dataset
 
+"""
+    Kernel
 
+The supertype of all kernels used for kernel density estimaton (KDE).
+"""
 abstract type Kernel end 
+
+"""
+    BoxKernel <: Kernel
+
+Naive box kernel density estimator from [1].
+"""
 struct BoxKernel <: Kernel end
+
 #struct GaussianKernel <: Kernel end 
 
 export silverman_rule, kerneldensity, BoxKernel #, GaussianKernel
@@ -48,8 +59,8 @@ Evaluate the kernel function of type `kerneltype` with the provided `args`.
 
 ## Example 
 
-- `evaluate_kernel(GaussianKernel(), d, σ` evaluates the Gaussian 
-kernel for the distance `d` and average marginal standard deviation `σ`.
+- `evaluate_kernel(GaussianKernel(), d, σ` evaluates the Gaussian kernel for the 
+    distance `d` and average marginal standard deviation `σ`.
 """
 function evaluate_kernel end 
 
@@ -74,12 +85,13 @@ function evaluate_kernel(kerneltype::BoxKernel, idxs_pts_within_range)
 end
 
 """
-    kerneldensity(pts, gridpts, kernel::BoxKernel; 
+    kerneldensity(pts, gridpts = pts, kernel::BoxKernel; 
         h = silverman_rule(pts), 
         metric::Metric = Chebyshev(), 
         normalise = true) -> Vector{Float64}
 
-Naive box kernel density estimator from [1].
+Compute a kernel density estimate from `pts`, given a set of `gridpts` 
+over which to evaluate the density.
 
 # Arguments 
 
@@ -100,8 +112,7 @@ Naive box kernel density estimator from [1].
 
 - **`normalise`**: Normalise the density so that it sums to 1.
 
-- **`metric`**: A instance of a valid metric from `Distances.jl` that is 
-    nonnegative, symmetric and satisfies the triangle inequality. Defaults to 
+- **`metric`**: A instance of a valid metric from `Distances.jl`. Defaults to 
     `metric = Chebyshev()`.
 
 # Returns 
@@ -131,9 +142,7 @@ kd_nonnorm = kerneldensity(pts, gridpts, BoxKernel(), normalise = false);
 # Make sure the result sums to one of normalised and that it doesn't when not normalising
 sum(kd_norm) ≈ 1
 !(sum(kd_nonnorm) ≈ 1)
-
 ```
-
 """
 function kerneldensity(pts, gridpts, kernel::BoxKernel; 
         h = silverman_rule(pts), 
